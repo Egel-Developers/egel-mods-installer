@@ -28,13 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.install = new System.Windows.Forms.Button();
+            this.progress = new System.Windows.Forms.Label();
+            this.debug = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // install
+            // 
+            this.install.Location = new System.Drawing.Point(122, 55);
+            this.install.Name = "install";
+            this.install.Size = new System.Drawing.Size(75, 23);
+            this.install.TabIndex = 0;
+            this.install.Text = "Install";
+            this.install.UseVisualStyleBackColor = true;
+            this.install.Click += new System.EventHandler(this.install_Click);
+            // 
+            // progress
+            // 
+            this.progress.AutoSize = true;
+            this.progress.Location = new System.Drawing.Point(140, 106);
+            this.progress.Name = "progress";
+            this.progress.Size = new System.Drawing.Size(35, 13);
+            this.progress.TabIndex = 1;
+            this.progress.Text = "label1";
+            // 
+            // debug
+            // 
+            this.debug.AutoSize = true;
+            this.debug.Location = new System.Drawing.Point(140, 136);
+            this.debug.Name = "debug";
+            this.debug.Size = new System.Drawing.Size(35, 13);
+            this.debug.TabIndex = 2;
+            this.debug.Text = "label2";
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(342, 450);
+            this.Controls.Add(this.debug);
+            this.Controls.Add(this.progress);
+            this.Controls.Add(this.install);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button install;
+        private System.Windows.Forms.Label progress;
+        private System.Windows.Forms.Label debug;
     }
 }
 
