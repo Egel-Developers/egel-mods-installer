@@ -35,16 +35,18 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.error = new System.Windows.Forms.Label();
+            this.versionSelect = new System.Windows.Forms.ComboBox();
+            this.select = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // install
             // 
             this.install.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.install.Location = new System.Drawing.Point(48, 100);
+            this.install.Location = new System.Drawing.Point(172, 100);
             this.install.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.install.Name = "install";
-            this.install.Size = new System.Drawing.Size(150, 75);
+            this.install.Size = new System.Drawing.Size(120, 75);
             this.install.TabIndex = 0;
             this.install.Text = "Installeren";
             this.install.UseVisualStyleBackColor = false;
@@ -53,7 +55,7 @@
             // progress
             // 
             this.progress.AutoSize = true;
-            this.progress.Location = new System.Drawing.Point(32, 203);
+            this.progress.Location = new System.Drawing.Point(32, 249);
             this.progress.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.progress.MaximumSize = new System.Drawing.Size(400, 300);
             this.progress.MinimumSize = new System.Drawing.Size(400, 0);
@@ -66,10 +68,10 @@
             // uninstall
             // 
             this.uninstall.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.uninstall.Location = new System.Drawing.Point(266, 100);
+            this.uninstall.Location = new System.Drawing.Point(48, 100);
             this.uninstall.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.uninstall.Name = "uninstall";
-            this.uninstall.Size = new System.Drawing.Size(150, 75);
+            this.uninstall.Size = new System.Drawing.Size(120, 75);
             this.uninstall.TabIndex = 2;
             this.uninstall.Text = "Deïnstalleren";
             this.uninstall.UseVisualStyleBackColor = false;
@@ -102,7 +104,7 @@
             // 
             this.error.AutoSize = true;
             this.error.ForeColor = System.Drawing.Color.Red;
-            this.error.Location = new System.Drawing.Point(32, 249);
+            this.error.Location = new System.Drawing.Point(32, 295);
             this.error.MaximumSize = new System.Drawing.Size(400, 300);
             this.error.MinimumSize = new System.Drawing.Size(400, 0);
             this.error.Name = "error";
@@ -110,11 +112,34 @@
             this.error.TabIndex = 4;
             this.error.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // versionSelect
+            // 
+            this.versionSelect.FormattingEnabled = true;
+            this.versionSelect.Location = new System.Drawing.Point(48, 203);
+            this.versionSelect.Name = "versionSelect";
+            this.versionSelect.Size = new System.Drawing.Size(368, 26);
+            this.versionSelect.TabIndex = 5;
+            this.versionSelect.SelectedValueChanged += new System.EventHandler(this.versionSelect_SelectedValueChanged);
+            // 
+            // select
+            // 
+            this.select.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.select.Location = new System.Drawing.Point(296, 100);
+            this.select.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.select.Name = "select";
+            this.select.Size = new System.Drawing.Size(120, 75);
+            this.select.TabIndex = 6;
+            this.select.Text = "Mods Laden";
+            this.select.UseVisualStyleBackColor = false;
+            this.select.Click += new System.EventHandler(this.select_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 321);
+            this.ClientSize = new System.Drawing.Size(464, 371);
+            this.Controls.Add(this.select);
+            this.Controls.Add(this.versionSelect);
             this.Controls.Add(this.error);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.uninstall);
@@ -141,6 +166,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label error;
+        private System.Windows.Forms.ComboBox versionSelect;
+        private System.Windows.Forms.Button select;
     }
 }
 

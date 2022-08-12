@@ -5,6 +5,7 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace Egel_Mods_Installer
 {
@@ -14,12 +15,14 @@ namespace Egel_Mods_Installer
 
         static dynamic versions;
         static string version;
+        static string loadedVersion;
 
         readonly string remoteData = "https://egelbank.nl/EgelMods/data.json";
 
         readonly string path = $"{appData}/.minecraft/";
+        readonly string egelPath = $"{appData}/.minecraft/.egel/";
         readonly string modsPath = $"{appData}/.minecraft/mods/";
-        readonly string modsPathOld = $"{appData}/.minecraft/mods/old_mods/";
+        readonly string modsPathUser = $"{appData}/.minecraft/mods/user_mods/";
         string versionsPath;
 
         static string[] downloadUrls;
@@ -28,7 +31,6 @@ namespace Egel_Mods_Installer
 
         string fabricClientJar;
         string fabricClientJson;
-
 
         public Form1()
         {
@@ -45,10 +47,40 @@ namespace Egel_Mods_Installer
             // Take latest version as default
             version = data.latest.ToString();
 
+            if (Directory.Exists(egelPath))
+            {
+                version = File.ReadAllText(egelPath + "selectedVersion.json");
+            }
+
             // Get all possible versions
             versions = data.versions;
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(versions);
+            foreach (PropertyDescriptor property in properties)
+            {
+                versionSelect.Items.Add(property.Name);
+            }
 
-            ChangeVersion(data, version);
+            if (Directory.Exists(egelPath))
+            {
+                string defaultSelected = File.ReadAllText(egelPath + "selectedVersion.json");
+
+                if (!String.IsNullOrEmpty(defaultSelected))
+                {
+                    versionSelect.Items[versionSelect.FindStringExact(defaultSelected)] += "✔";
+                    loadedVersion = defaultSelected;
+                }
+            }
+
+            ChangeSelectedVersion(versions, version);
+
+            if (!Directory.Exists(egelPath)) {
+                Directory.CreateDirectory(egelPath);
+            }
+
+            if (!File.Exists(egelPath + "selectedVersion.json")) {
+                File.Create(egelPath + "selectedVersion.json").Close();
+            }
+
         }
 
         private void install_Click(object sender, EventArgs e)
@@ -64,23 +96,33 @@ namespace Egel_Mods_Installer
 
                 if (appData.Length == 0) return;
 
-                //Move all existing mods to ../.minecraft/mods/old_mods/
-                if (Directory.Exists(modsPath) && !Directory.Exists(modsPathOld) && Directory.EnumerateFileSystemEntries(modsPath).Any())
+                if (Directory.Exists(modsPath + version)) throw new Exception("Deze versie is al geïnstalleerd");
+
+                //Move all existing mods to ../.minecraft/mods/user_mods/
+                if (Directory.Exists(modsPath) && !Directory.Exists(modsPathUser) && Directory.EnumerateFileSystemEntries(modsPath).Any())
                 {
                     progress.Text = "Bestaande mods gevonden";
                     progress.Update();
 
-                    Directory.CreateDirectory(modsPathOld);
+                    Directory.CreateDirectory(modsPathUser);
 
                     progress.Text = "Bestaande mods verplaatsen...";
                     progress.Update();
                     string[] oldMods = Directory.GetFiles(modsPath, "*.jar", SearchOption.TopDirectoryOnly);
                     foreach (string modPath in oldMods)
                     {
-                        File.Copy(modPath, modPath.Replace(modsPath, modsPathOld));
+                        File.Copy(modPath, modPath.Replace(modsPath, modsPathUser));
                         File.Delete(modPath);
                     }
 
+                    Directory.CreateDirectory(modsPath + version);
+                    ChangeLoadedVersion(version);
+                }
+                // If you already have some other version(s) installed
+                else if (Directory.Exists(modsPath) && Directory.Exists(egelPath) &&Directory.EnumerateFileSystemEntries(modsPath).Any())
+                {
+                    Directory.CreateDirectory(modsPath + version);
+                    ChangeLoadedVersion(version);
                 }
                 else
                 {
@@ -224,14 +266,26 @@ namespace Egel_Mods_Installer
                 progress.Text = "Oude mods terugzetten";
                 progress.Update();
 
-                if (Directory.Exists(modsPathOld) && Directory.EnumerateFileSystemEntries(modsPathOld).Any()) {
-                    string[] oldMods = Directory.GetFiles(modsPathOld, "*.jar", SearchOption.TopDirectoryOnly);
+                if (Directory.Exists(modsPathUser) && Directory.EnumerateFileSystemEntries(modsPathUser).Any()) {
+                    string[] oldMods = Directory.GetFiles(modsPathUser, "*.jar", SearchOption.TopDirectoryOnly);
                     foreach (string modPath in oldMods) 
                     {
-                        File.Copy(modPath, modPath.Replace(modsPathOld, modsPath));
+                        File.Copy(modPath, modPath.Replace(modsPathUser, modsPath));
                         File.Delete(modPath);
                     }
-                    Directory.Delete(modsPathOld);
+                    Directory.Delete(modsPathUser);
+                }
+
+                if (Directory.Exists(modsPath + version)) {
+                    progress.Text = "Mods subfolder verwijderen";
+                    progress.Update();
+                    Directory.Delete(modsPath + version, true);
+                }
+
+                // Als de verwijderde versie de geladen versie was
+                if (version == loadedVersion)
+                {
+                    ChangeLoadedVersion("");
                 }
 
                 progress.Text = "Succesvol verwijderd!";
@@ -249,6 +303,38 @@ namespace Egel_Mods_Installer
                 progress.Update();
             }
         }
+
+        private void select_Click(object sender, EventArgs e)
+        {
+            try {
+                DisableButtons();
+
+                error.Text = "";
+                error.Update();
+
+                string selectedVersion = versionSelect.SelectedItem.ToString();
+
+                ChangeLoadedVersion(selectedVersion);
+
+                EnableButtons();
+            }
+            catch (Exception ex)
+            {
+                EnableButtons();
+
+                error.Text = ex.Message;
+                error.Update();
+                progress.Text = "Klik op installeren om te beginnen";
+                progress.Update();
+            }
+        }
+
+        private void versionSelect_SelectedValueChanged(object sender, EventArgs e)
+        {
+            version = versionSelect.SelectedItem.ToString().Replace("✔", "");
+            ChangeSelectedVersion(versions, version);
+        }
+
 
         void DisableButtons()
         {
@@ -272,10 +358,20 @@ namespace Egel_Mods_Installer
             uninstall.Update();
         }
 
-        void ChangeVersion(dynamic data, string newVersion)
+        void ChangeSelectedVersion(dynamic versions, string version)
         {
+            string newVersion = version.Replace("✔", "");
+
+            if (String.IsNullOrEmpty(newVersion))
+            {
+                newVersion = versionSelect.Items[0].ToString();
+            }
+
+            // Put it in the combobox as the default value
+            versionSelect.SelectedIndex = versionSelect.FindString(version);
+
             // Get all mod URL's (latest version's by default)
-            downloadUrls = (data.versions[newVersion].mods).ToObject<string[]>();
+            downloadUrls = (versions[newVersion].mods).ToObject<string[]>();
 
             linkCount = downloadUrls.Length;
 
@@ -283,6 +379,73 @@ namespace Egel_Mods_Installer
             versionsPath = $"{appData}/.minecraft/versions/Egel-{newVersion}/";
             fabricClientJar = $"https://egelbank.nl/EgelMods/{newVersion}/Egel-{newVersion}.jar";
             fabricClientJson = $"https://egelbank.nl/EgelMods/{newVersion}/Egel-{newVersion}.json";
+        }
+
+        void ChangeLoadedVersion(string version)
+        {
+            string newVersion = version.Replace("✔", "");
+            string oldLoadedVersion = File.ReadAllText(egelPath + "selectedVersion.json");
+
+            if (loadedVersion == newVersion) throw new Exception("Deze versie is al geladen");
+            
+            // Check if you have the new version installed
+            if (!Directory.Exists(modsPath + newVersion)) throw new Exception($"Deze versie is nog niet geïnstalleerd");
+
+            for (int i = 0; i < versionSelect.Items.Count; i++)
+            {
+                versionSelect.Items[i] = versionSelect.Items[i].ToString().Replace("✔", "");
+            }
+
+            // Dit gebeurt wanneer de loaded version wordt gedeïnstalleerd
+            if (!String.IsNullOrEmpty(newVersion))
+                versionSelect.Items[versionSelect.FindStringExact(newVersion)] += "✔";
+
+
+            File.WriteAllText(egelPath + "selectedVersion.json", newVersion);
+
+            // Return als er geen niewe versie is (dit gebeurt wanneer de loaded version wordt gedeïnstalleerd)
+            if (String.IsNullOrEmpty(newVersion)) {
+                loadedVersion = "";
+                return;
+            }
+
+            if (String.IsNullOrEmpty(oldLoadedVersion))
+            {
+                progress.Text = $"Aan het overstappen op {newVersion}...";
+                progress.Update();
+            }
+
+            string oldModsPath = modsPath + oldLoadedVersion + "/";
+            string newModsPath = modsPath + newVersion + "/";
+
+            // If there wasn't anything loaded, move the files to user_mods
+            if (String.IsNullOrEmpty(oldLoadedVersion))
+            {
+                oldModsPath = modsPathUser;
+            }
+
+            Directory.CreateDirectory(oldModsPath);
+            Directory.CreateDirectory(newModsPath);
+
+            string[] movableMods = Directory.GetFiles(modsPath, "*.jar", SearchOption.TopDirectoryOnly);
+            foreach (string modPath in movableMods)
+            {
+                File.Copy(modPath, modPath.Replace(modsPath, oldModsPath));
+                File.Delete(modPath);
+            }
+
+            movableMods = Directory.GetFiles(newModsPath, "*.jar", SearchOption.TopDirectoryOnly);
+            foreach (string modPath in movableMods)
+            {
+                File.Copy(modPath, modPath.Replace(newModsPath, modsPath));
+                File.Delete(modPath);
+            }
+
+            loadedVersion = newVersion;
+
+
+            progress.Text = $"Overgestapt op {newVersion}!";
+            progress.Update();
         }
     }
 }
