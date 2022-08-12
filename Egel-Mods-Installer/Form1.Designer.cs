@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Installeren = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.install = new System.Windows.Forms.Button();
             this.progress = new System.Windows.Forms.Label();
             this.uninstall = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -37,17 +38,17 @@
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Installeren
+            // install
             // 
-            this.Installeren.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.Installeren.Location = new System.Drawing.Point(48, 100);
-            this.Installeren.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.Installeren.Name = "Installeren";
-            this.Installeren.Size = new System.Drawing.Size(150, 75);
-            this.Installeren.TabIndex = 0;
-            this.Installeren.Text = "Installeren";
-            this.Installeren.UseVisualStyleBackColor = false;
-            this.Installeren.Click += new System.EventHandler(this.install_Click);
+            this.install.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.install.Location = new System.Drawing.Point(48, 100);
+            this.install.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.install.Name = "install";
+            this.install.Size = new System.Drawing.Size(150, 75);
+            this.install.TabIndex = 0;
+            this.install.Text = "Installeren";
+            this.install.UseVisualStyleBackColor = false;
+            this.install.Click += new System.EventHandler(this.install_Click);
             // 
             // progress
             // 
@@ -118,9 +119,10 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.uninstall);
             this.Controls.Add(this.progress);
-            this.Controls.Add(this.Installeren);
+            this.Controls.Add(this.install);
             this.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "Form1";
             this.Text = "Egel Mods Installer";
@@ -133,7 +135,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button Installeren;
+        private System.Windows.Forms.Button install;
         private System.Windows.Forms.Label progress;
         private System.Windows.Forms.Button uninstall;
         private System.Windows.Forms.Panel panel1;
