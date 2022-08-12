@@ -30,7 +30,6 @@
         {
             this.install = new System.Windows.Forms.Button();
             this.progress = new System.Windows.Forms.Label();
-            this.debug = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // install
@@ -52,21 +51,11 @@
             this.progress.TabIndex = 1;
             this.progress.Text = "label1";
             // 
-            // debug
-            // 
-            this.debug.AutoSize = true;
-            this.debug.Location = new System.Drawing.Point(140, 136);
-            this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(35, 13);
-            this.debug.TabIndex = 2;
-            this.debug.Text = "label2";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(342, 450);
-            this.Controls.Add(this.debug);
             this.Controls.Add(this.progress);
             this.Controls.Add(this.install);
             this.Name = "Form1";
@@ -80,7 +69,6 @@
 
         private System.Windows.Forms.Button install;
         private System.Windows.Forms.Label progress;
-        private System.Windows.Forms.Label debug;
     }
 }
 
