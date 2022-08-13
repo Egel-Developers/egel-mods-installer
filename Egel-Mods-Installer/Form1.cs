@@ -88,7 +88,8 @@ namespace Egel_Mods_Installer
             ChangeSelectedVersion(versions, selectedVersion);
 
             if (!Directory.Exists(egelPath)) {
-                Directory.CreateDirectory(egelPath);
+                DirectoryInfo di = Directory.CreateDirectory(egelPath);
+                di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
 
             if (!File.Exists(egelPath + "loadedVersion.json")) {
@@ -408,7 +409,6 @@ namespace Egel_Mods_Installer
 
                 return;
             }
-
             EnableInstall();
 
             downloadUrls = (versions[newVersion].mods).ToObject<string[]>();
@@ -535,24 +535,30 @@ namespace Egel_Mods_Installer
 
         void DisableInstall()
         {
-            install.Click -= install_Click;
-            uninstall.Click -= uninstall_Click;
+            if (install.Enabled)
+            {
+                install.Click -= install_Click;
+                uninstall.Click -= uninstall_Click;
 
-            install.Enabled = false;
-            uninstall.Enabled = false;
-            install.Update();
-            uninstall.Update();
+                install.Enabled = false;
+                uninstall.Enabled = false;
+                install.Update();
+                uninstall.Update();
+            }
         }
 
         void EnableInstall()
         {
-            install.Click += install_Click;
-            uninstall.Click += uninstall_Click;
+            if (!install.Enabled)
+            {
+                install.Click += install_Click;
+                uninstall.Click += uninstall_Click;
 
-            install.Enabled = true;
-            uninstall.Enabled = true;
-            install.Update();
-            uninstall.Update();
+                install.Enabled = true;
+                uninstall.Enabled = true;
+                install.Update();
+                uninstall.Update();
+            }
         }
 
         private void versionSelect_DrawItem(object sender, DrawItemEventArgs e)
