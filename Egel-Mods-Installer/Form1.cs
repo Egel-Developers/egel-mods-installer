@@ -507,30 +507,46 @@ namespace Egel_Mods_Installer
         #region GUI Functions
         void DisableButtons()
         {
-            install.Click -= install_Click;
-            uninstall.Click -= uninstall_Click;
-            select.Click -= select_Click;
+            if (install.Enabled)
+            {
+                install.Click -= install_Click;
+                uninstall.Click -= uninstall_Click;
+                
 
-            install.Enabled = false;
-            uninstall.Enabled = false;
-            select.Enabled = false;
-            install.Update();
-            uninstall.Update();
-            select.Update();
+                install.Enabled = false;
+                uninstall.Enabled = false;
+                
+                install.Update();
+                uninstall.Update();
+                
+            }
+            if (select.Enabled)
+            {
+                select.Click -= select_Click;
+                select.Enabled = false;
+                select.Update();
+            }
         }
 
         void EnableButtons()
         {
-            install.Click += install_Click;
-            uninstall.Click += uninstall_Click;
-            select.Click += select_Click;
+            if (!install.Enabled)
+            {
+                install.Click += install_Click;
+                uninstall.Click += uninstall_Click;
 
-            install.Enabled = true;
-            uninstall.Enabled = true;
-            select.Enabled = true;
-            install.Update();
-            uninstall.Update();
-            select.Update();
+                install.Enabled = true;
+                uninstall.Enabled = true;
+
+                install.Update();
+                uninstall.Update();
+            }
+            if (!select.Enabled)
+            {
+                select.Click += select_Click;
+                select.Enabled = true;
+                select.Update();
+            }
         }
 
         void DisableInstall()

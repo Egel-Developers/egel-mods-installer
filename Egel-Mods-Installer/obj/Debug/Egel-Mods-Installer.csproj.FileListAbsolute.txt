@@ -26,3 +26,17 @@ C:\Users\milan\Desktop\c scherp prullen\testing\Egel-Mods-Installer\obj\Debug\Eg
 C:\Users\milan\Desktop\c scherp prullen\testing\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.csproj.CopyComplete
 C:\Users\milan\Desktop\c scherp prullen\testing\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.exe
 C:\Users\milan\Desktop\c scherp prullen\testing\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.pdb
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\bin\Debug\Egel-Mods-Installer.exe.config
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\bin\Debug\Egel-Mods-Installer.exe
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\bin\Debug\Egel-Mods-Installer.pdb
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.csproj.AssemblyReference.cache
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.csproj.SuggestedBindingRedirects.cache
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel_Mods_Installer.Form1.resources
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel_Mods_Installer.Properties.Resources.resources
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.csproj.GenerateResource.cache
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.csproj.CoreCompileInputs.cache
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.csproj.CopyComplete
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.exe
+C:\Users\milan\Source\Repos\egel-mods-installer\Egel-Mods-Installer\obj\Debug\Egel-Mods-Installer.pdb
