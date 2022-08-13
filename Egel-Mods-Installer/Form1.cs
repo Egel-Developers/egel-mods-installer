@@ -23,6 +23,7 @@ namespace Egel_Mods_Installer
         readonly string egelPath = $"{appData}/.minecraft/.egel/";
         readonly string modsPath = $"{appData}/.minecraft/mods/";
         readonly string modsPathUser = $"{appData}/.minecraft/mods/user_mods/";
+        readonly string versionsPathRoot = $"{appData}/.minecraft/versions/";
         string versionsPath;
 
         static string[] downloadUrls;
@@ -52,6 +53,8 @@ namespace Egel_Mods_Installer
                 selectedVersion = File.ReadAllText(egelPath + "loadedVersion.json");
             }
 
+            string[] installedVersions = GetInstalledVersions();
+
             // Get all possible versions
             versions = data.versions;
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(versions);
@@ -66,7 +69,7 @@ namespace Egel_Mods_Installer
 
                 if (!String.IsNullOrEmpty(defaultSelected))
                 {
-                    versionSelect.Items[versionSelect.FindStringExact(defaultSelected)] += "✔";
+                    versionSelect.Items[versionSelect.FindStringExact(defaultSelected)] += " ✔";
                     loadedVersion = defaultSelected;
                 }
             }
@@ -347,7 +350,7 @@ namespace Egel_Mods_Installer
 
         private void versionSelect_SelectedValueChanged(object sender, EventArgs e)
         {
-            selectedVersion = versionSelect.SelectedItem.ToString().Replace("✔", "");
+            selectedVersion = versionSelect.SelectedItem.ToString().Replace(" ✔", "");
             ChangeSelectedVersion(versions, selectedVersion);
         }
 
@@ -381,7 +384,7 @@ namespace Egel_Mods_Installer
 
         void ChangeSelectedVersion(dynamic versions, string version)
         {
-            string newVersion = version.Replace("✔", "");
+            string newVersion = version.Replace(" ✔", "");
 
             if (String.IsNullOrEmpty(newVersion))
             {
@@ -404,7 +407,7 @@ namespace Egel_Mods_Installer
 
         void ChangeLoadedVersion(string version)
         {
-            string newVersion = version.Replace("✔", "");
+            string newVersion = version.Replace(" ✔", "");
             string oldLoadedVersion = File.ReadAllText(egelPath + "loadedVersion.json");
 
             if (loadedVersion == newVersion) throw new Exception("Deze versie is al geladen");
@@ -414,12 +417,12 @@ namespace Egel_Mods_Installer
 
             for (int i = 0; i < versionSelect.Items.Count; i++)
             {
-                versionSelect.Items[i] = versionSelect.Items[i].ToString().Replace("✔", "");
+                versionSelect.Items[i] = versionSelect.Items[i].ToString().Replace(" ✔", "");
             }
 
             // Dit gebeurt wanneer de loaded version wordt gedeïnstalleerd
             if (!String.IsNullOrEmpty(newVersion))
-                versionSelect.Items[versionSelect.FindStringExact(newVersion)] += "✔";
+                versionSelect.Items[versionSelect.FindStringExact(newVersion)] += " ✔";
 
 
             File.WriteAllText(egelPath + "loadedVersion.json", newVersion);
@@ -471,7 +474,11 @@ namespace Egel_Mods_Installer
 
         string[] GetInstalledVersions()
         {
-            string[] modVersions = Directory.GetDirectories(modsPath, "1.*");
+            string[] modVersions = Directory.GetDirectories(versionsPathRoot, "Egel-*");
+            for (int i = 0; i < modVersions.Length; i++)
+            {
+                modVersions[i] = modVersions[i].Substring(modVersions[i].LastIndexOf('/') + 6);
+            }
             return modVersions;
         }
     }

@@ -114,6 +114,7 @@
             // 
             // versionSelect
             // 
+            this.versionSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.versionSelect.FormattingEnabled = true;
             this.versionSelect.Location = new System.Drawing.Point(48, 203);
             this.versionSelect.Name = "versionSelect";
