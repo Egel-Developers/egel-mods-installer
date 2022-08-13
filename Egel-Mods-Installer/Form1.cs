@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using Newtonsoft.Json;
 using System.ComponentModel;
+using System.Drawing;
 
 namespace Egel_Mods_Installer
 {
@@ -45,15 +46,23 @@ namespace Egel_Mods_Installer
 
             dynamic data = JsonConvert.DeserializeObject(json);
 
+            versionSelect.Items.Add("Jouw mods");
+
             // Take latest version as default
             selectedVersion = data.latest.ToString();
 
             if (Directory.Exists(egelPath))
             {
                 selectedVersion = File.ReadAllText(egelPath + "loadedVersion.json");
+
+                if (String.IsNullOrEmpty(selectedVersion))
+                {
+                    selectedVersion = "Jouw mods";
+                }
             }
 
             string[] installedVersions = GetInstalledVersions();
+
 
             // Get all possible versions
             versions = data.versions;
@@ -69,9 +78,13 @@ namespace Egel_Mods_Installer
 
                 if (!String.IsNullOrEmpty(defaultSelected))
                 {
-                    versionSelect.Items[versionSelect.FindStringExact(defaultSelected)] += " ✔";
                     loadedVersion = defaultSelected;
+                } else
+                {
+                    loadedVersion = "Jouw mods";
                 }
+
+                versionSelect.Items[versionSelect.FindStringExact(loadedVersion)] += " ✔";
             }
 
             ChangeSelectedVersion(versions, selectedVersion);
@@ -82,7 +95,7 @@ namespace Egel_Mods_Installer
 
             if (!File.Exists(egelPath + "loadedVersion.json")) {
                 File.Create(egelPath + "loadedVersion.json").Close();
-            }
+            }         
         }
 
         private void install_Click(object sender, EventArgs e)
@@ -91,6 +104,8 @@ namespace Egel_Mods_Installer
             {
                 if (String.IsNullOrEmpty(selectedVersion)) throw new Exception("No version set");
 
+                if (selectedVersion == "Jouw mods") return;
+
                 DisableButtons();
 
                 error.Text = "";
@@ -98,7 +113,7 @@ namespace Egel_Mods_Installer
 
                 if (appData.Length == 0) return;
 
-                if (Directory.Exists(modsPath + selectedVersion)) throw new Exception("Deze versie is al geïnstalleerd");
+                if (GetInstalledVersions().Contains(selectedVersion)) throw new Exception("Deze versie is al geïnstalleerd");
 
                 //Move all existing mods to ../.minecraft/mods/user_mods/
                 if (Directory.Exists(modsPath) && !Directory.Exists(modsPathUser))
@@ -220,6 +235,8 @@ namespace Egel_Mods_Installer
         {
             try
             {
+                if (selectedVersion == "Jouw mods") return;
+
                 DisableButtons();
 
                 error.Text = "";
@@ -336,10 +353,14 @@ namespace Egel_Mods_Installer
                 ChangeLoadedVersion(selectedVersion);
 
                 EnableButtons();
+
+                if (loadedVersion == "user_mods") DisableInstall();
             }
             catch (Exception ex)
             {
                 EnableButtons();
+
+                if (loadedVersion == "user_mods") DisableInstall();
 
                 error.Text = ex.Message;
                 error.Update();
@@ -382,6 +403,28 @@ namespace Egel_Mods_Installer
             select.Update();
         }
 
+        void DisableInstall()
+        {
+            install.Click -= install_Click;
+            uninstall.Click -= uninstall_Click;
+
+            install.Enabled = false;
+            uninstall.Enabled = false;
+            install.Update();
+            uninstall.Update();
+        }
+
+        void EnableInstall()
+        {
+            install.Click += install_Click;
+            uninstall.Click += uninstall_Click;
+
+            install.Enabled = true;
+            uninstall.Enabled = true;
+            install.Update();
+            uninstall.Update();
+        }
+
         void ChangeSelectedVersion(dynamic versions, string version)
         {
             string newVersion = version.Replace(" ✔", "");
@@ -395,6 +438,22 @@ namespace Egel_Mods_Installer
             versionSelect.SelectedIndex = versionSelect.FindString(version);
 
             // Get all mod URL's (latest version's by default)
+            if (newVersion == "Jouw mods")
+            {
+                downloadUrls = new string[0];
+                linkCount = 0;
+                versionsPath = "";
+                fabricClientJar = "";
+                fabricClientJson = "";
+
+
+                DisableInstall();
+
+                return;
+            }
+
+            EnableInstall();
+
             downloadUrls = (versions[newVersion].mods).ToObject<string[]>();
 
             linkCount = downloadUrls.Length;
@@ -410,22 +469,26 @@ namespace Egel_Mods_Installer
             string newVersion = version.Replace(" ✔", "");
             string oldLoadedVersion = File.ReadAllText(egelPath + "loadedVersion.json");
 
+            newVersion = newVersion == "Jouw mods" ? "user_mods" : newVersion;
+
             if (loadedVersion == newVersion) throw new Exception("Deze versie is al geladen");
             
             // Check if you have the new version installed
-            if (!Directory.Exists(modsPath + newVersion)) throw new Exception($"Deze versie is nog niet geïnstalleerd");
+            if (!Directory.Exists(modsPath + newVersion) && newVersion != "user_mods") throw new Exception($"Deze versie is nog niet geïnstalleerd");
 
             for (int i = 0; i < versionSelect.Items.Count; i++)
             {
                 versionSelect.Items[i] = versionSelect.Items[i].ToString().Replace(" ✔", "");
             }
 
-            // Dit gebeurt wanneer de loaded version wordt gedeïnstalleerd
-            if (!String.IsNullOrEmpty(newVersion))
+            // Dit gebeurt niet wanneer de loaded version wordt gedeïnstalleerd
+            if (!String.IsNullOrEmpty(newVersion) && newVersion != "user_mods")
                 versionSelect.Items[versionSelect.FindStringExact(newVersion)] += " ✔";
+            else versionSelect.Items[versionSelect.FindStringExact("Jouw mods")] += " ✔";
 
-
-            File.WriteAllText(egelPath + "loadedVersion.json", newVersion);
+            if (newVersion != "user_mods")
+                File.WriteAllText(egelPath + "loadedVersion.json", newVersion);
+            else File.WriteAllText(egelPath + "loadedVersion.json", "");
 
             // Return als er geen niewe versie is (dit gebeurt wanneer de loaded version wordt gedeïnstalleerd)
             if (String.IsNullOrEmpty(newVersion)) {
@@ -467,8 +530,9 @@ namespace Egel_Mods_Installer
 
             loadedVersion = newVersion;
 
-
+            if (newVersion != "user_mods")
             progress.Text = $"Overgestapt op {newVersion}!";
+            else progress.Text = $"Overgestapt op jouw mods!";
             progress.Update();
         }
 
@@ -480,6 +544,37 @@ namespace Egel_Mods_Installer
                 modVersions[i] = modVersions[i].Substring(modVersions[i].LastIndexOf('/') + 6);
             }
             return modVersions;
+        }
+
+        private void versionSelect_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            string[] installedVersions = GetInstalledVersions();
+
+            e.DrawBackground();
+
+            Brush brush;
+
+            if (e.Index < 0) return;
+
+            if (installedVersions.Contains(versionSelect.Items[e.Index].ToString().Replace(" ✔", "")) || versionSelect.Items[e.Index].ToString().Replace(" ✔", "") == "Jouw mods")
+            {
+                brush = new SolidBrush(Color.Black);
+            } else
+            {
+                brush = new SolidBrush(Color.Gray);
+            }
+            
+            e.Graphics.DrawString(versionSelect.Items[e.Index].ToString(), versionSelect.Font, brush, e.Bounds);
+        }
+
+        private void versionSelect_DropDownClosed(object sender, EventArgs e)
+        {
+            progress.Focus();
+        }
+
+        private void versionSelect_DropDown(object sender, EventArgs e)
+        {
+            progress.Focus();
         }
     }
 }

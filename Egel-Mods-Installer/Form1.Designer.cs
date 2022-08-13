@@ -114,12 +114,17 @@
             // 
             // versionSelect
             // 
+            this.versionSelect.BackColor = System.Drawing.SystemColors.Window;
+            this.versionSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.versionSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.versionSelect.FormattingEnabled = true;
             this.versionSelect.Location = new System.Drawing.Point(48, 203);
             this.versionSelect.Name = "versionSelect";
-            this.versionSelect.Size = new System.Drawing.Size(368, 26);
+            this.versionSelect.Size = new System.Drawing.Size(368, 27);
             this.versionSelect.TabIndex = 5;
+            this.versionSelect.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.versionSelect_DrawItem);
+            this.versionSelect.DropDown += new System.EventHandler(this.versionSelect_DropDown);
+            this.versionSelect.DropDownClosed += new System.EventHandler(this.versionSelect_DropDownClosed);
             this.versionSelect.SelectedValueChanged += new System.EventHandler(this.versionSelect_SelectedValueChanged);
             // 
             // select
@@ -167,8 +172,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label error;
-        private System.Windows.Forms.ComboBox versionSelect;
         private System.Windows.Forms.Button select;
+        private System.Windows.Forms.ComboBox versionSelect;
     }
 }
 
