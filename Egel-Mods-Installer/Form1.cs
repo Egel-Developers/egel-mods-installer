@@ -12,6 +12,7 @@ namespace Egel_Mods_Installer
 {
     public partial class Form1 : Form
     {
+        #region Initialization
         readonly static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         static dynamic versions;
@@ -61,9 +62,6 @@ namespace Egel_Mods_Installer
                 }
             }
 
-            string[] installedVersions = GetInstalledVersions();
-
-
             // Get all possible versions
             versions = data.versions;
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(versions);
@@ -95,13 +93,16 @@ namespace Egel_Mods_Installer
 
             if (!File.Exists(egelPath + "loadedVersion.json")) {
                 File.Create(egelPath + "loadedVersion.json").Close();
-            }         
+            }
         }
+        #endregion
 
+        #region Button Click Events
         private void install_Click(object sender, EventArgs e)
         {
             try
             {
+                progress.Focus();
                 if (String.IsNullOrEmpty(selectedVersion)) throw new Exception("No version set");
 
                 if (selectedVersion == "Jouw mods") return;
@@ -235,6 +236,7 @@ namespace Egel_Mods_Installer
         {
             try
             {
+                progress.Focus();
                 if (selectedVersion == "Jouw mods") return;
 
                 DisableButtons();
@@ -344,7 +346,9 @@ namespace Egel_Mods_Installer
 
         private void select_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
+                progress.Focus();
                 DisableButtons();
 
                 error.Text = "";
@@ -368,61 +372,14 @@ namespace Egel_Mods_Installer
                 progress.Update();
             }
         }
+        #endregion
 
+        #region Helper Functions
         private void versionSelect_SelectedValueChanged(object sender, EventArgs e)
         {
+            progress.Focus();
             selectedVersion = versionSelect.SelectedItem.ToString().Replace(" ✔", "");
             ChangeSelectedVersion(versions, selectedVersion);
-        }
-
-        void DisableButtons()
-        {
-            install.Click -= install_Click;
-            uninstall.Click -= uninstall_Click;
-            select.Click -= select_Click;
-
-            install.Enabled = false;
-            uninstall.Enabled = false;
-            select.Enabled = false;
-            install.Update();
-            uninstall.Update();
-            select.Update();
-        }
-
-        void EnableButtons()
-        {
-            install.Click += install_Click;
-            uninstall.Click += uninstall_Click;
-            select.Click += select_Click;
-
-            install.Enabled = true;
-            uninstall.Enabled = true;
-            select.Enabled = true;
-            install.Update();
-            uninstall.Update();
-            select.Update();
-        }
-
-        void DisableInstall()
-        {
-            install.Click -= install_Click;
-            uninstall.Click -= uninstall_Click;
-
-            install.Enabled = false;
-            uninstall.Enabled = false;
-            install.Update();
-            uninstall.Update();
-        }
-
-        void EnableInstall()
-        {
-            install.Click += install_Click;
-            uninstall.Click += uninstall_Click;
-
-            install.Enabled = true;
-            uninstall.Enabled = true;
-            install.Update();
-            uninstall.Update();
         }
 
         void ChangeSelectedVersion(dynamic versions, string version)
@@ -545,6 +502,58 @@ namespace Egel_Mods_Installer
             }
             return modVersions;
         }
+        #endregion
+
+        #region GUI Functions
+        void DisableButtons()
+        {
+            install.Click -= install_Click;
+            uninstall.Click -= uninstall_Click;
+            select.Click -= select_Click;
+
+            install.Enabled = false;
+            uninstall.Enabled = false;
+            select.Enabled = false;
+            install.Update();
+            uninstall.Update();
+            select.Update();
+        }
+
+        void EnableButtons()
+        {
+            install.Click += install_Click;
+            uninstall.Click += uninstall_Click;
+            select.Click += select_Click;
+
+            install.Enabled = true;
+            uninstall.Enabled = true;
+            select.Enabled = true;
+            install.Update();
+            uninstall.Update();
+            select.Update();
+        }
+
+        void DisableInstall()
+        {
+            install.Click -= install_Click;
+            uninstall.Click -= uninstall_Click;
+
+            install.Enabled = false;
+            uninstall.Enabled = false;
+            install.Update();
+            uninstall.Update();
+        }
+
+        void EnableInstall()
+        {
+            install.Click += install_Click;
+            uninstall.Click += uninstall_Click;
+
+            install.Enabled = true;
+            uninstall.Enabled = true;
+            install.Update();
+            uninstall.Update();
+        }
 
         private void versionSelect_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -559,11 +568,13 @@ namespace Egel_Mods_Installer
             if (installedVersions.Contains(versionSelect.Items[e.Index].ToString().Replace(" ✔", "")) || versionSelect.Items[e.Index].ToString().Replace(" ✔", "") == "Jouw mods")
             {
                 brush = new SolidBrush(Color.Black);
-            } else
+            }
+            else
             {
                 brush = new SolidBrush(Color.Gray);
             }
-            
+
+
             e.Graphics.DrawString(versionSelect.Items[e.Index].ToString(), versionSelect.Font, brush, e.Bounds);
         }
 
@@ -576,5 +587,6 @@ namespace Egel_Mods_Installer
         {
             progress.Focus();
         }
+        #endregion
     }
 }

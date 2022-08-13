@@ -117,6 +117,7 @@
             this.versionSelect.BackColor = System.Drawing.SystemColors.Window;
             this.versionSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.versionSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.versionSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.versionSelect.FormattingEnabled = true;
             this.versionSelect.Location = new System.Drawing.Point(48, 203);
             this.versionSelect.Name = "versionSelect";
