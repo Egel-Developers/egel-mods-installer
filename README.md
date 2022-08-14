@@ -1,5 +1,5 @@
 # egel-mods-installer
-A Dutch Minecraft Java Edition mod manager for the Fabric ecosystem that makes it easy to install new modpacks, switch between them and uninstall them. It makes this tedious task super quick and easy, with an easy to understand graphical user interface. It even creates launcher profiles for you automatically!
+A Dutch Minecraft Java Edition mod manager for Windows, using mods from the Fabric ecosystem, that makes it easy to install new modpacks, switch between them and uninstall them. It makes this tedious task super quick and easy, with an easy to understand graphical user interface. It even creates launcher profiles for you automatically!
 Apart from our modpacks you can also have your own mods as a selectable option, that you installed manually in the mods folder.
 
 All modpacks are composed by us (but we didn't make any of the mods).
