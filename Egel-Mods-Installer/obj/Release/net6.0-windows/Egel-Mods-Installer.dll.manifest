@@ -99,13 +99,13 @@
       <dsig:DigestValue>YAQZgF64M5XjIwNMoOj7FjEqtTdTT/I9X1FV/ZzwUF8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Egel-Mods-Installer.dll" size="131072">
+  <file name="Egel-Mods-Installer.dll" size="131584">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>zjxAYdjzIHtOUOhGM7PiYb4hrOdxt/jUhN1gXnAEpJg=</dsig:DigestValue>
+      <dsig:DigestValue>UhRYFgP//3IvJ6ylSFMvozRTuA4D67AblVgyuJRFXrk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Egel-Mods-Installer.dll.config" size="187">
@@ -117,13 +117,13 @@
       <dsig:DigestValue>+CM46OnHRrXZXNLMx7+U3V3iubiYL//d8hGOR13lDhU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Egel-Mods-Installer.exe" size="153088">
+  <file name="Egel-Mods-Installer.exe" size="153600">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>b3LQzzUIyZ9vPoCxBJnButZkJrwpqdKeUW26it3gFIg=</dsig:DigestValue>
+      <dsig:DigestValue>kjY+WD2lzza9pbf2q09gWMKwwn+qYEwbYhWLrzghBOk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="es\System.Private.ServiceModel.resources.dll" size="217464">

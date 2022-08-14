@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Egel-Mods-Installer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A Dutch Minecraft Java Edition mod manager for Windows, using mods from the Fabric ecosystem, that makes it easy to install new modpacks, switch between them and uninstall them.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Egel Developers")]
 [assembly: AssemblyProduct("Egel-Mods-Installer")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
