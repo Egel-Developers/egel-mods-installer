@@ -9,7 +9,7 @@ All modpacks are composed by us (but we didn't make any of the mods).
 2. Select a modpack from the dropdown menu.
 3. Install it using the **Installeren** button.
 
-Installed modpacks are marked with black text in the dropdown menu, for non-installed modpacks the name is grayed out.
+Installed modpacks are marked with a black name in the dropdown menu, for non-installed modpacks the name is grayed out.
 Freshly installed modpacks are loaded automatically. 
 
 # Manage multiple modpacks
