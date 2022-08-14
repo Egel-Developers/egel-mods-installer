@@ -1,0 +1,3 @@
+C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\net6.0-windows\publish\win-x64\Egel-Mods-Installer.dll.config
+C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\net6.0-windows\publish\win-x64\sni.dll
+C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\net6.0-windows\publish\win-x64\Egel-Mods-Installer.exe

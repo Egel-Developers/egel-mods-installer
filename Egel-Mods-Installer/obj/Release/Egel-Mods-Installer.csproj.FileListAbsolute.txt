@@ -1,6 +1,5 @@
 C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\Egel-Mods-Installer.exe.config
 C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\Egel-Mods-Installer.exe
-C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\Egel-Mods-Installer.pdb
 C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\Newtonsoft.Json.dll
 C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\Newtonsoft.Json.xml
 C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\obj\Release\Egel-Mods-Installer.csproj.AssemblyReference.cache
@@ -11,4 +10,7 @@ C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\obj\Release\
 C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\obj\Release\Egel-Mods-Installer.csproj.CoreCompileInputs.cache
 C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\obj\Release\Egel-Mods-Installer.csproj.CopyComplete
 C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\obj\Release\Egel-Mods-Installer.exe
-C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\obj\Release\Egel-Mods-Installer.pdb
+C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\Egel-Mods-Installer.exe.manifest
+C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\bin\Release\Egel-Mods-Installer.application
+C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\obj\Release\Egel-Mods-Installer.exe.manifest
+C:\Users\nspet\source\repos\egel-mods-installer\Egel-Mods-Installer\obj\Release\Egel-Mods-Installer.application
