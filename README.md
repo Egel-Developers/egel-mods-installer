@@ -5,7 +5,7 @@ Apart from our modpacks you can also have your own mods as a selectable option, 
 All modpacks are composed by us (but we didn't make any of the mods).
 
 # Basic usage
-1. Download and run the .exe file.
+1. [Download](https://github.com/Egel-Developers/egel-mods-installer/releases/tag/v1.0.0) and run the .exe file.
 2. Select a modpack from the dropdown menu.
 3. Install it using the **Installeren** button.
 
